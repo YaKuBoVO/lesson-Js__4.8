@@ -1,14 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="shortcut icon"
+      href="https://cdn0.vox-cdn.com/uploads/chorus_asset/file/3488502/shutterstock_106919999.0.jpg"
+      type="image/x-icon">
    <link rel="stylesheet" href="style/style.css">
-   <title>lesson-Js__4.8</title>
+   <title>Reck-Paper-Scissors</title>
 </head>
-<body>
-   <h1>Hello World!</h1>
+
+<body class="preload">
+   <header id="header">
+      <h1>
+         ROCK <br>
+         PAPER <br>
+         SCISSORS <br>
+      </h1>
+
+      <div class="count">
+         <h2 class="score-title">SCORE</h2>
+         <span class="score__number">0</span>
+      </div>
+   </header>
+
+
+   <section class="game">
+      <div class="content-two">
+         <button class="choice-btn" data-choice="paper">
+            <div class="choice paper">
+               <img src="img/dont-paper.svg" alt="Paper">
+            </div>
+         </button>
+
+         <button class="choice-btn" data-choice="scissors">
+            <div class="choice scissors">
+               <img src="img/dont-scissors.svg" alt="Scissors">
+            </div>
+         </button>
+      </div>
+
+      <div class="content-rock">
+         <button class="choice-btn" data-choice="rock">
+            <div class="choice rock">
+               <img src="img/dont-stone.svg" alt="Rock">
+            </div>
+         </button>
+      </div>
+   </section>
+
+   <section class="results hidden">
+      <h2 class="results__heading">you picked</h2>
+      <h2 class="results__heading">the house picked</h2>
+      <div class="results__result"></div>
+      <div class="results__winner hidden">
+         <h3 class="results__text"></h3>
+         <button class="play-again">play again</button>
+      </div>
+      <div class="results__result"></div>
+   </section>
+
+   <button class="rules-btn" tabindex="1">Rules</button>
+   <div class="modal">
+      <div class="modal-container">
+         <header class="modal-header">
+            <h2 class="modal-heading">rules</h2>
+            <button class="close-btn">
+               <img src="img/images/icon-close.svg" alt="Close">
+            </button>
+         </header>
+         <img class="rules-img" src="img/images/image-rules.svg" alt="Rules">
+      </div>
+   </div>
+
+
 
    <script src="script.js"></script>
 </body>
+
 </html>

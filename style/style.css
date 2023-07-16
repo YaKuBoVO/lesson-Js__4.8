@@ -1,9 +1,354 @@
+:root {
+  --light-text: #ffffff;
+  --dark-text: hsl(229, 25%, 31%);
+  --score-text: hsl(229, 64%, 46%);
+  --outline: hsl(217, 16%, 45%);
+  --bg-grad-1: hsl(214, 47%, 23%);
+  --bg-grad-2: hsl(237, 49%, 15%);
+  --scissors-1: hsl(39, 89%, 49%);
+  --scissors-2: hsl(40, 84%, 53%);
+  --paper-1: hsl(230, 89%, 62%);
+  --paper-2: hsl(230, 89%, 65%);
+  --rock-1: hsl(349, 71%, 52%);
+  --rock-2: hsl(349, 70%, 56%);
+  --shadow-light: #00000026;
+  --shadow-med: #0000004d;
+}
+
 * {
-   padding: 0;
-   margin: 0;
-   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  /*overflow-y: hidden;*/
 }
 
 body {
-   background-color: #333;
+  background-color: #172244;
+  color: var(--light-text);
+  min-height: 100vh;
+  text-transform: uppercase;
 }
+
+.container {
+  position: relative;
+  min-width: 700px;
+  margin: 0 auto;
+  padding-top: 2rem;
+}
+
+#header {
+  width: 700px;
+  height: 150px;
+  padding: 1rem 1.4rem 1rem 2rem;
+  margin: 0 auto;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  algin-items: center;
+  border: 3px solid var(--outline);
+  border-radius: 20px;
+}
+
+#header h1 {
+  font-size: 32px;
+  font-weight: 900;
+  color: #fff;
+}
+
+#header .count {
+  width: 150px;
+  height: 100%;
+  text-align: center;
+  background: #fff;
+  border-radius: 10px;
+}
+
+#header .count h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-top: 10px;
+  color: var(--score-text);
+}
+
+#header .count span {
+  font-size: 4rem;
+  font-weight: 700;
+  margin: 15px;
+  color: var(--dark-text);
+}
+
+/* Results */
+.results {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  place-items: center;
+  grid-template-areas:
+    "you-title ai-title"
+    "you-picked ai-picked";
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.results__heading {
+  font-size: 1.5rem;
+  letter-spacing: 0.1rem;
+  padding: 4rem 0 8rem;
+}
+.results__result {
+  /*min-width: 10rem;
+  min-height: 10rem;*/
+  background: #16213d;
+  border-radius: 50%;
+  transform: scale(1.4);
+  /*z-index: -1;*/
+}
+
+.results__heading:first-of-type {
+  grid-area: you-title;
+}
+.results__heading:last-of-type {
+  grid-area: ai-title;
+}
+.results__result:first-of-type {
+  grid-area: you-picked;
+}
+.results__result:last-of-type {
+  grid-area: ai-picked;
+}
+
+.results.show-winner {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "you-title . ai-title"
+    "you-picked result-winner ai-picked";
+}
+
+.winner .choice::after {
+  box-shadow: 0 0 0 40px #293251, 0 0 0 80px #232c4b, 0 0 0 130px #1e2949;
+  animation: winner 1s ease forwards;
+}
+
+@keyframes winner {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.results__winner {
+  grid-area: result-winner;
+  display: grid;
+  place-items: center;
+}
+.results__text {
+  font-size: 3.5rem;
+  padding-bottom: 1.5rem;
+}
+.play-again {
+  background: #fff;
+  outline: none;
+  border: 2px solid transparent;
+  border-radius: 0.6rem;
+  color: var(--dark-text);
+  padding: 0.6rem 3.5rem;
+  font-family: inherit;
+  text-transform: inherit;
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+.play-again:focus {
+  border: 2px solid var(--outline);
+}
+
+/* Rules Button */
+.rules-btn {
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+  background: none;
+  outline: none;
+  border: 2px solid var(--outline);
+  border-radius: 0.6rem;
+  color: var(--light-text);
+  padding: 0.5rem 2rem;
+  font-family: inherit;
+  font-size: 1.3rem;
+  text-transform: inherit;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+.rules-btn:focus {
+  border: 2px solid #fff;
+}
+
+/* Rules Modal */
+.modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  background: var(--shadow-med);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+}
+.modal-container {
+  background: #fff;
+  border-radius: 0.5rem;
+}
+.modal-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 2rem 2rem 1rem;
+}
+.modal-heading {
+  font-size: 1.5rem;
+  color: var(--dark-text);
+}
+.close-btn {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
+.rules-img {
+  padding: 2rem 4rem;
+}
+.show-modal {
+  opacity: 1;
+  pointer-events: initial;
+}
+
+/* Utilities */
+.preload * {
+  transition: none;
+}
+
+.hidden {
+  display: none;
+}
+
+/*Game*/
+.game button {
+  width: 160px;
+  height: 185px;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  outline: none;
+}
+.game button:focus {
+  outline: none;
+}
+
+.game {
+  padding-top: 1.2rem;
+  /*position: relative;
+  display: grid;
+  grid-template-areas:
+    "paper scissors"
+    "rock rock";
+  place-items: center;
+  height: 25.5rem;
+  padding-top: 2.5rem;*/
+}
+
+.content-two {
+  display: flex;
+  column-gap: 100px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.content-rock {
+  text-align: center;
+}
+.game button img {
+  width: 160px;
+  height: 180px;
+}
+
+.game::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 37%;
+  top: 42%;
+  background: url("../img/images/bg-triangle.svg") no-repeat;
+  z-index: -1;
+}
+
+/* Choice */
+.choice-btn {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
+
+.choice {
+  /*position: relative;
+  width: 10rem;
+  height: 10rem;
+  background: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;*/
+  /*box-shadow: inset 0 0.5rem var(--shadow-light);*/
+}
+
+/*.choice::before,
+.choice::after {
+  content: "";
+  position: absolute;
+  left: -15%;
+  top: -15%;
+  width: 130%;
+  height: 130%;
+  border-radius: 50%;
+  z-index: -1;
+}
+.choice::after {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.choice-btn:focus .choice::after {
+  opacity: 1;
+  box-shadow: 0 0 0 2rem #223351;
+  z-index: -2;
+}
+
+.choice.paper::before {
+   background: linear-gradient(to bottom, var(--paper-1), var(--paper-2));
+   box-shadow: 0 0.5rem var(--shadow-med), 0 0.5rem var(--paper-2);
+}
+
+.choice.scissors::before {
+   background: linear-gradient(to bottom, var(--scissors-1), var(--scissors-2));
+   box-shadow: 0 0.5rem var(--shadow-med), 0 0.5rem var(--scissors-2);
+}
+
+.choice.rock::before {
+   background: linear-gradient(to bottom, var(--rock-1), var(--rock-2));
+   box-shadow: 0 0.5rem var(--shadow-med), 0 0.5rem var(--rock-2);
+}
+
+.choice-btn[data-choice="paper"] {
+  grid-area: paper;
+}
+.choice-btn[data-choice="scissors"] {
+  grid-area: scissors;
+}
+.choice-btn[data-choice="rock"] {
+  grid-area: rock;
+}*/
