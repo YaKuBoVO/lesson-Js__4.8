@@ -7,8 +7,7 @@ setTimeout(() => {
 let btnRules = document.querySelector('.rules-btn');
 let btnClose = document.querySelector('.close-btn');
 let modalRules = document.querySelector('.modal');
-let resultWinner = document.querySelector('.results__winner');
-let resultText = document.querySelector(".results__text");
+
 
 const CHOICES = [
    {
@@ -24,10 +23,14 @@ const CHOICES = [
       beats: "scissors"
    },
 ]
+
 const choiceButtons = document.querySelectorAll('.choice-btn');
 const gameDiv = document.querySelector('.game');
 const resultsDiv = document.querySelector('.results');
 const resultDivs = document.querySelectorAll('.results__result');
+
+const resultWinner = document.querySelector(".results__winner");
+const resultText = document.querySelector(".results__text");
 
 const playAgainBtn = document.querySelector('.play-again');
 
@@ -39,12 +42,12 @@ choiceButtons.forEach(button => {
    button.addEventListener('click', () => {
       const choiceName = button.dataset.choice;
       const choice = CHOICES.find(choice => choice.name === choiceName);
-      choose(choice)
-   })
-})
+      choose(choice);
+   });
+});
 
 function choose(choice) {
-   const aichoice = aiChoose()
+   const aichoice = aiChoose();
    displayResults([choice, aichoice]);
    displayWinner([choice, aichoice]);
 }
@@ -59,7 +62,7 @@ function displayResults(results) {
       setTimeout(() => {
          resultDiv.innerHTML = `
          <div class="choice ${results[idx].name}">
-         <img src="img/dont-${results[idx].name}.svg" alt="${results[idx].name}"/>
+         <img src="img/icon-${results[idx].name}.svg" alt="${results[idx].name}"/>
          </div>
          `
       }, idx * 1000);
@@ -68,8 +71,6 @@ function displayResults(results) {
    resultsDiv.classList.toggle('hidden');
 }
 
-//resultDivs.style.width = "160px";
-//resultDivs.style.height = "160px";
 
 
 
@@ -87,12 +88,12 @@ function displayWinner(results) {
           resultDivs[1].classList.toggle('winner');
           keepScore(-1);
       }  else {
-         resultText.innerText = "draw"
-      }
+         resultText.innerText = "draw";
+      };
       resultWinner.classList.toggle('hidden');
       resultsDiv.classList.toggle('show-winner');
    }, 1000);
-}
+};
 
 
 function isWinner(results) {
@@ -118,7 +119,7 @@ playAgainBtn.addEventListener('click', () => {
 
    resultText.innerText = "";
    resultWinner.classList.toggle('hidden');
-   resultWinner.classList.toggle('show-winner');
+   resultsDiv.classList.toggle('show-winner');
 });
 
 
